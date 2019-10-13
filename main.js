@@ -29,13 +29,9 @@ var app = new Vue({
   },
   computed: {
     filteredPokemons() {
-      return this.pokemons
-        .filter(pokemon => pokemon.name.includes(this.searchText.toLowerCase()))
-        .filter(pokemon => {
-          return this.selectedTypes.length === 0
-            ? true
-            : pokemon.types.some(type => this.selectedTypes.includes(type));
-        });
+      return this.pokemons.filter(pokemon =>
+        pokemon.name.includes(this.searchText.toLowerCase())
+      );
     }
   },
   methods: {
@@ -51,7 +47,7 @@ var app = new Vue({
   created: function() {
     fetch("https://api.jsonbin.io/b/5ab37f77989617146bd6eb29")
       .then(response => response.json())
-      .then(function(pokemons) {
+      .then(pokemons => {
         app.pokemons = pokemons;
         console.log(pokemons);
       });

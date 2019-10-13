@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="images/favicon.ico" />
     <title>Vue Pokedex</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./style.css" />
     <style>
       [v-cloak] {
         display: none;
@@ -17,73 +17,55 @@
   <body>
     <!-- Header -->
     <header class="main-header">
-      Vue - Pokedex
+      Vue Table - Pokedex
     </header>
     <!-- Content -->
     <div id="app" class="main-content" v-cloak>
-      <!-- Left Side Filters -->
-      <aside class="pokedex-filters">
-        <!-- Searchbox -->
-        <div class="nice-input-wrapper">
-          <!-- <input type="text" placeholder="Search by name" class="nice-input" :value="searchText" @input="setSearchText"> -->
-          <input
-            type="text"
-            placeholder="Search by name"
-            class="nice-input"
-            v-model="searchText"
-          />
-          <span class="focus-border"><i></i></span>
-        </div>
-        <!-- Type Filters -->
-        <p class="checkboxes-list-title">Type</p>
-        <div class="checkboxes-list">
-          <!-- Type Selector -->
-          <div class="md-checkbox" v-for="(color ,type) in typeColor">
-            <input
-              :id="'checkbox-' + type"
-              type="checkbox"
-              :value="type"
-              v-model="selectedTypes"
-            />
-            <label :for="'checkbox-' + type">
-              <i class="material-icons" :style="{color: color}">lens</i>
-              <span class="label-title">{{ type }}</span>
-            </label>
-          </div>
-        </div>
-      </aside>
-      <!-- Pokemons View -->
-      <main class="main-view">
-        <!-- Full Pokemons List in: https://api.jsonbin.io/b/5ab37f77989617146bd6eb29 -->
-        <article class="pokemons-list">
-          <!-- Pokemon Card -->
-          <div
-            class="pokemon-card"
-            v-for="(pokemon, index) in filteredPokemons"
-            :key="pokemon.id"
-          >
-            <div class="background-wrapper">
-              <div
-                v-for="type in pokemon.types"
-                :style="{'background-color': typeColor[type]}"
-              ></div>
-            </div>
-            <span class="remove-pokemon" v-on:click="removePokemon(pokemon)">
-              <i class="material-icons">close</i>
+      <input
+        type="text"
+        id="myInput"
+        placeholder="Search for names.."
+        title="Type in a name"
+        v-model="searchText"
+      />
+      <table id="myTable">
+        <tr class="header">
+          <th style="width:20%;"></th>
+          <th style="width:20%;">Name</th>
+          <th style="width:20%;">
+            Types
+          </th>
+          <th style="width:20%;">Abilities</th>
+          <th style="width:20%;">Image</th>
+        </tr>
+        <tr v-for="pokemon in filteredPokemons" :key="pokemon.id">
+          <td>
+            <span class="tag-remove" v-on:click="removePokemon(pokemon)"></span>
+          </td>
+          <td>{{ pokemon.name }}</td>
+          <td>
+            <span v-for="(type, index) in pokemon.types"
+              >{{ type
+              }}<span v-if="index != pokemon.types.length - 1">, </span>
             </span>
-            <div class="image-wrapper">
-              <img
-                :src="pokemon.image"
-                :alt="pokemon.name"
-                class="pokemon-image"
-              />
-            </div>
-            <div class="pokemon-title">
-              {{ pokemon.name + " " + index }}
-            </div>
-          </div>
-        </article>
-      </main>
+          </td>
+          <td>
+            <span v-for="(type, index) in pokemon.abilities"
+              >{{ type
+              }}<span v-if="index != pokemon.abilities.length - 1">, </span>
+            </span>
+          </td>
+
+          <td :style="{'background-color': typeColor[pokemon.types[0]]}">
+            <img style="width:100px" :src="pokemon.image" />
+          </td>
+
+          <!--
+          <td :style="{'background-color': typeColor[pokemon.types[0]]}">
+            <img style="width:100px" :src="pokemon.image" />
+          </td>-->
+        </tr>
+      </table>
     </div>
     <script src="https://unpkg.com/vue"></script>
     <script src="./main.js"></script>
