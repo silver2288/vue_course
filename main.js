@@ -32,8 +32,15 @@ var app = new Vue({
       return this.pokemons
       .filter((pokemon) => pokemon.name.includes(this.searchText.toLowerCase()))
       .filter((pokemon) => {
-        return this.selectedTypes.length === 0 ? true :
-          pokemon.types.some(type => this.selectedTypes.includes(type))
+        if(this.selectedTypes.length === 0){
+          return true;
+        } else if (this.selectedTypes.length === 1){
+          return pokemon.types.some(type => type.includes(this.selectedTypes[0]));
+        } else if (this.selectedTypes.length === 2){
+          return pokemon.types.some(type => type.includes(this.selectedTypes[0])) && pokemon.types.some(type => type.includes(this.selectedTypes[1]));
+        } else {
+          return false;
+        }
       });
     }
   },
