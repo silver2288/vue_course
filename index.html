@@ -21,13 +21,25 @@
     </header>
     <!-- Content -->
     <div id="app" class="main-content" v-cloak>
-      <input
-        type="text"
-        id="myInput"
-        placeholder="Search for names.."
-        title="Type in a name"
-        v-model="searchText"
-      />
+    <!-- Type Filters -->
+      <p class="checkboxes-list-title">Type</p>
+      <div class="checkboxes-list">
+          <!-- Type Selector -->
+          <div class="md-checkbox" v-for="(color ,type) in typeColor">
+            <input :id="'checkbox-' + type" type="checkbox" :value="type" v-model='selectedTypes'>
+            <label :for="'checkbox-' + type">
+                <i class="material-icons" :style="{color: color}">*</i>
+                <span class="label-title">{{ type }}</span>
+            </label>
+          </div>
+          <input
+          type="text"
+          id="myInput"
+          placeholder="Search for names.."
+          title="Type in a name"
+          v-model="searchText"
+        />
+      </div>
       <table id="myTable">
         <tr class="header">
           <th style="width:20%;"></th>

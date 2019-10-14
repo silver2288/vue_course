@@ -29,9 +29,12 @@ var app = new Vue({
   },
   computed: {
     filteredPokemons() {
-      return this.pokemons.filter(pokemon =>
-        pokemon.name.includes(this.searchText.toLowerCase())
-      );
+      return this.pokemons
+      .filter((pokemon) => pokemon.name.includes(this.searchText.toLowerCase()))
+      .filter((pokemon) => {
+        return this.selectedTypes.length === 0 ? true :
+          pokemon.types.some(type => this.selectedTypes.includes(type))
+      });
     }
   },
   methods: {

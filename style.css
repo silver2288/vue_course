@@ -44,6 +44,12 @@
   cursor: pointer;
 }
 
+.checkboxes-list {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
 /*
 table tr:not(:first-child) > td:last-child {
   background: linear-gradient(
